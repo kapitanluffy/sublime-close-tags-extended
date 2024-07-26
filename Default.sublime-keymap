@@ -1,0 +1,18 @@
+[
+    {
+        "keys": [">"], "command": "tag_close", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "(text.html, text.xml) - string - comment | (meta.jsx | meta.tsx) - punctuation.definition.tag.begin", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_match", "operand": "\\s*<.*[^/>]$", "match_all": true },
+            { "key": "setting.auto_close_tags" }
+        ]
+    },
+    {
+        "keys": ["/"], "command": "close_tag", "args": { "insert_slash": true }, "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "(text.html, text.xml) - string - comment | meta.jsx | meta.tsx", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_match", "operand": ".*<$", "match_all": true },
+            { "key": "setting.auto_close_tags" }
+        ]
+    }
+]
