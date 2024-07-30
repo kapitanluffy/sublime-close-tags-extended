@@ -10,8 +10,11 @@ class TagCloseCommand(sublime_plugin.TextCommand):
         return regions
 
     def run(self, edit: sublime.Edit, **kwargs):
-        character = ">" if kwargs.get("insert_slash", False) is False else "/"
-        self.view.run_command("insert", {"characters": character})
+        insert_slash = kwargs.get("insert_slash", False)
+        if insert_slash is True:
+            self.view.run_command("left_delete")
+        if insert_slash is False:
+            self.view.run_command("insert", {"characters": ">"})
         regions = self.get_current_positions()
         self.view.run_command("close_tag")
 
@@ -19,5 +22,3 @@ class TagCloseCommand(sublime_plugin.TextCommand):
             new_selections = self.view.sel()
             new_selections.clear()
             new_selections.add_all(regions)
-
-
